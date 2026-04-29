@@ -86,7 +86,7 @@ public class SecurityConfig {
         http
                 //Отключаем защиту (для REST API не нужно)
                 .csrf(csrf -> csrf.disable())
-                .cors(cors -> cors.disable()) //.cors(cors -> cors.configurationSource(corsConfigurationSource()))
+                .cors(cors -> cors.configurationSource(corsConfigurationSource()))
 
                 //Не храним сессии (REST API)
                 .sessionManagement(session -> session

@@ -2,9 +2,12 @@ package com.example.bankcards.entity;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "cards")
@@ -33,6 +36,14 @@ public class Card {
 
     @Column(nullable = false, precision = 19, scale = 2)
     private BigDecimal balance;
+
+    @CreatedDate
+    @Column(name = "created_at", updatable = false)
+    private LocalDateTime createdAt;
+
+    @LastModifiedDate
+    @Column(name = "updated_at")
+    private LocalDateTime updatedAt;
 
     public enum CardStatus {
         ACTIVE, BLOCKED, EXPIRED
