@@ -2,6 +2,11 @@ databaseChangeLog:
   - changeSet:
       id: 1
       author: bank_system
+      preConditions:
+        - onFail: MARK_RAN
+        - not:
+            - tableExists:
+                tableName: users
       changes:
         - createTable:
             tableName: users
@@ -87,3 +92,38 @@ databaseChangeLog:
             referencedTableName: users
             referencedColumnNames: id
             constraintName: fk_cards_user
+
+  - changeSet:
+      id: 2
+      author: bank_system
+      preConditions:
+        - onFail: MARK_RAN
+        - tableExists:
+            tableName: users
+        - not:
+            - columnExists:
+                tableName: users
+                columnName: created_at
+      changes:
+        - addColumn:
+            tableName: users
+            columns:
+              - column:
+                  name: created_at
+                  type: timestamp
+                  defaultValueComputed: CURRENT_TIMESTAMP
+              - column:
+                  name: updated_at
+                  type: timestamp
+                  defaultValueComputed: CURRENT_TIMESTAMP
+        - addColumn:
+            tableName: cards
+            columns:
+              - column:
+                  name: created_at
+                  type: timestamp
+                  defaultValueComputed: CURRENT_TIMESTAMP
+              - column:
+                  name: updated_at
+                  type: timestamp
+                  defaultValueComputed: CURRENT_TIMESTAMP
